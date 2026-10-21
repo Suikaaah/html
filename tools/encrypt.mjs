@@ -45,12 +45,12 @@ const ciphertext = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, pla
 const payload = JSON.stringify({ v: 1, iter: ITERATIONS, salt: b64(salt), iv: b64(iv), ct: b64(ciphertext) });
 
 const page = `<!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>パスワード保護</title>
+<title>Password required</title>
 <style>
 :root{--bg:#f3f5f8;--surface:#fff;--ink:#14213a;--muted:#7b879a;--line:#dfe4ec;--blue:#2563eb;--on-c:#fff;--err:#c62828;color-scheme:light}
 @media (prefers-color-scheme: dark){:root{--bg:#0e1218;--surface:#161c25;--ink:#e7ecf3;--muted:#7f8b9b;--line:#29313d;--blue:#6ea2ff;--on-c:#0e1218;--err:#ff7b7b;color-scheme:dark}}
@@ -69,11 +69,11 @@ button:disabled{opacity:.6;cursor:wait}
 </head>
 <body>
 <form id="f" autocomplete="on">
-  <h1>パスワードを入力</h1>
+  <h1>Enter password</h1>
   <input type="text" name="username" value="points" autocomplete="username" hidden>
-  <input id="pw" type="password" autocomplete="current-password" aria-label="パスワード" required autofocus>
-  <label class="remember"><input id="rm" type="checkbox">このデバイスで記憶する</label>
-  <button id="go" type="submit">開く</button>
+  <input id="pw" type="password" autocomplete="current-password" aria-label="Password" required autofocus>
+  <label class="remember"><input id="rm" type="checkbox">Remember on this device</label>
+  <button id="go" type="submit">Unlock</button>
   <p class="msg" id="msg" role="alert"></p>
 </form>
 <script id="payload" type="application/json">${payload}</script>
@@ -117,7 +117,7 @@ button:disabled{opacity:.6;cursor:wait}
       if (document.getElementById("rm").checked) store.set(b64(raw));
       show(html);
     } catch(err) {
-      msg.textContent = "パスワードが違います";
+      msg.textContent = "Incorrect password";
       go.disabled = false;
     }
   });
